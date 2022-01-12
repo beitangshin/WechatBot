@@ -1,0 +1,60 @@
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: D:/WechatBot/wechat-bot-master/client/qt_c++/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/TDM-GCC-64/bin/mingw32-make.exe -f Makefile /nologo cmTC_a2433\fast && Makefile:35: *** missing separator.  Stop.
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: D:/WechatBot/wechat-bot-master/client/qt_c++/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/TDM-GCC-64/bin/mingw32-make.exe -f Makefile /nologo cmTC_3fc01\fast && Makefile:35: *** missing separator.  Stop.
+
+
+
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: D:/WechatBot/wechat-bot-master/client/qt_c++/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/TDM-GCC-64/bin/mingw32-make.exe -f Makefile /nologo cmTC_acbe3\fast && Makefile:35: *** missing separator.  Stop.
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: D:/WechatBot/wechat-bot-master/client/qt_c++/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/TDM-GCC-64/bin/mingw32-make.exe -f Makefile /nologo cmTC_a3be4\fast && Makefile:35: *** missing separator.  Stop.
+
+
+
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: D:/WechatBot/wechat-bot-master/client/qt_c++/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/TDM-GCC-64/bin/mingw32-make.exe -f Makefile /nologo cmTC_d87d6\fast && Makefile:35: *** missing separator.  Stop.
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: D:/WechatBot/wechat-bot-master/client/qt_c++/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/TDM-GCC-64/bin/mingw32-make.exe -f Makefile /nologo cmTC_75444\fast && Makefile:35: *** missing separator.  Stop.
+
+
+
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: D:/WechatBot/wechat-bot-master/client/qt_c++/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/TDM-GCC-64/bin/mingw32-make.exe -f Makefile /nologo cmTC_44944\fast && Makefile:35: *** missing separator.  Stop.
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: D:/WechatBot/wechat-bot-master/client/qt_c++/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/TDM-GCC-64/bin/mingw32-make.exe -f Makefile /nologo cmTC_287ca\fast && Makefile:35: *** missing separator.  Stop.
+
+
+

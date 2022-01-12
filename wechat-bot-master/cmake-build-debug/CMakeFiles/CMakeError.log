@@ -1,0 +1,30 @@
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: D:/WechatBot/wechat-bot-master/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/TDM-GCC-64/bin/mingw32-make.exe -f Makefile /nologo cmTC_211ea\fast && Makefile:35: *** missing separator.  Stop.
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: D:/WechatBot/wechat-bot-master/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/TDM-GCC-64/bin/mingw32-make.exe -f Makefile /nologo cmTC_291a4\fast && Makefile:35: *** missing separator.  Stop.
+
+
+
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: D:/WechatBot/wechat-bot-master/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/TDM-GCC-64/bin/mingw32-make.exe -f Makefile /nologo cmTC_5cd63\fast && Makefile:35: *** missing separator.  Stop.
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: D:/WechatBot/wechat-bot-master/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/TDM-GCC-64/bin/mingw32-make.exe -f Makefile /nologo cmTC_bbf1b\fast && Makefile:35: *** missing separator.  Stop.
+
+
+

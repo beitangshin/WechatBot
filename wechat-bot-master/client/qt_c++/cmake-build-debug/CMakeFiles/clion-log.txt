@@ -1,0 +1,32 @@
+"D:\software\clion\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/TDM-GCC-64/bin/mingw32-make.exe -DCMAKE_C_COMPILER=C:/TDM-GCC-64/bin/gcc.exe -DCMAKE_CXX_COMPILER=C:/TDM-GCC-64/bin/g++.exe -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - NMake Makefiles" D:\WechatBot\wechat-bot-master\client\qt_c++
+-- The C compiler identification is GNU 10.3.0
+-- The CXX compiler identification is GNU 10.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - failed
+-- Check for working C compiler: C:/TDM-GCC-64/bin/gcc.exe
+-- Check for working C compiler: C:/TDM-GCC-64/bin/gcc.exe - broken
+CMake Error at D:/software/clion/CLion 2021.2.1/bin/cmake/win/share/cmake-3.20/Modules/CMakeTestCCompiler.cmake:66 (message):
+  The C compiler
+
+    "C:/TDM-GCC-64/bin/gcc.exe"
+
+  is not able to compile a simple test program.
+
+  It fails with the following output:
+
+    Change Dir: D:/WechatBot/wechat-bot-master/client/qt_c++/cmake-build-debug/CMakeFiles/CMakeTmp
+    
+    Run Build Command(s):C:/TDM-GCC-64/bin/mingw32-make.exe -f Makefile /nologo cmTC_287ca\fast && Makefile:35: *** missing separator.  Stop.
+    
+    
+
+  
+
+  CMake will not be able to correctly generate this project.
+Call Stack (most recent call first):
+  CMakeLists.txt:2 (project)
+
+
+-- Configuring incomplete, errors occurred!
+See also "D:/WechatBot/wechat-bot-master/client/qt_c++/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+See also "D:/WechatBot/wechat-bot-master/client/qt_c++/cmake-build-debug/CMakeFiles/CMakeError.log".
