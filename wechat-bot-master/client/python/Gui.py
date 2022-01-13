@@ -17,11 +17,11 @@ class MY_GUI():
         self.Contacts = []
         self.GroupContacts = []
         #GetContacts button setting
-        self.getcontactsbutton = Button(self.init_window_name, text="获取联系人", bg="lightblue", width=10)
+        self.getcontactsbutton = Button(self.init_window_name, text="获取联系人", bg="lightblue", width=10,command=self.list)
         self.getcontactsbutton.grid(row=20, column=0)
         #startmonitor button seeting
 
-        # self.getcontactsbutton = Button(self.init_window_name, text="开启机器人", bg="lightblue", width=10,command=self.startmonitor)
+        # self.getcontactsbutton = Button(self.init_window_name, text="开启机器人", bg="lightblue", width=10,command=self.list)
         # self.getcontactsbutton.grid(row=51, column=30)
 
 
@@ -99,6 +99,16 @@ class MY_GUI():
         self.group_reply.grid(row = 2, column = 6)
         self.group_replyBox = Listbox(self.init_window_name)
         self.group_replyBox.grid(row = 3, column = 6)
+
+    def list(self):
+        for i in range(10):
+            self.ContactsBox.insert("end",i)
+            self.ContactsBox.grid(row=3, column=0)
+            self.ContactsBox.bind('<Double-Button-1>', self.printshow)
+    def printshow(self,event):
+        a = self.ContactsBox.curselection()
+        print(a)
+
 
 
 

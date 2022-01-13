@@ -327,6 +327,54 @@ class MY_GUI():
         self.group_replyBox = Listbox(self.init_window_name)
         self.group_replyBox.grid(row=3, column=6)
 
+    def close_update_mainpage(self):
+
+#########cleanall###############################
+        self.group_nameBox.delete(0,END)
+        self.group_nameBox.grid(row=3, column=3)
+        self.group_keywordBox.delete(0,END)
+        self.group_keywordBox.grid(row=3, column=5)
+        self.group_replyBox.delete(0,END)
+        self.group_replyBox.grid(row=3, column=6)
+        self.person_nameBox.delete(0,END)
+        self.person_nameBox.grid(row=1, column=4)
+        self.person_keywordsBox.delete(0,END)
+        self.person_keywordsBox.grid(row=1, column=5)
+        self.person_replyBox.delete(0,END)
+        self.person_replyBox.grid(row=1, column=6)
+
+######################更新单个联系人##########
+        for i in monitor_name:
+            for ii in i.keys():
+
+                for iii in i[ii].keys():
+
+                    a =i[ii]
+                    self.person_nameBox.insert('end',ii)
+                    self.person_nameBox.grid(row=1, column=4)
+                    self.person_keywordsBox.insert('end',iii)
+                    self.person_keywordsBox.grid(row=1, column=5)
+                    self.person_replyBox.insert('end',a[iii])
+                    self.person_replyBox.grid(row=1, column=6)
+
+#################################更新监视框群聊#########################################
+        for i in monitor_group:
+            print(i)
+            for ii in i.keys():
+                print(ii)
+                for iii in i[ii].keys():
+                    print(iii)
+                    a = i[ii]
+                    self.group_nameBox.insert('end', ii)
+                    self.group_nameBox.grid(row=3, column=3)
+                    self.group_keywordBox.insert('end', iii)
+                    self.group_keywordBox.grid(row=3, column=5)
+                    self.group_replyBox.insert('end', a[iii])
+                    self.group_replyBox.grid(row=3, column=6)
+
+
+
+        self.ListBoxNewWindow.destroy()
 
     def getcontacts(self):
 
@@ -364,10 +412,10 @@ class MY_GUI():
 
 
 
-    def getgroupcontacts(self,window):
+    def getgroupcontacts(self):
 
         #@#####newwidonw
-        currentgroupnames = self.GroupContactsBox.get(window.selectname[0])
+        currentgroupnames = self.GroupContactsBox.get(self.ListBoxNewWindow.selectname[0])
         currentgroupwxid = contactsbook[currentgroupnames]
         groupmembers = self.wb.get_memberid()
         currentgroupmembers = []
@@ -383,128 +431,61 @@ class MY_GUI():
         # ListBoxNewWindow.ListBoxNewWindow_qroupmemBox.grid(row=1,column=20,rowspan =10)
 
 
-        window.ListBoxNewWindow_qroupmemBox.grid(row=1,column=1)
-        window.GroupcontactsScrollbar = Scrollbar(window)
-        window.GroupcontactsScrollbar.grid(row=1, column=10)
-        window.GroupcontactsScrollbar.config(command=window.ListBoxNewWindow_qroupmemBox.yview)
+        self.ListBoxNewWindow.ListBoxNewWindow_qroupmemBox.grid(row=1,column=1)
+        self.ListBoxNewWindow.GroupcontactsScrollbar = Scrollbar(self.ListBoxNewWindow)
+        self.ListBoxNewWindow.GroupcontactsScrollbar.grid(row=1, column=10)
+        self.ListBoxNewWindow.GroupcontactsScrollbar.config(command=self.ListBoxNewWindow.ListBoxNewWindow_qroupmemBox.yview)
         for ii in currentgroupmembers:
             nickname = self.wb.get_member_nick(ii,currentgroupwxid)
             xx = nickname['content']
             yy = json.loads(xx)
-            window.ListBoxNewWindow_qroupmemBox.insert("end",yy['nick'])
-            window.ListBoxNewWindow_qroupmemBox.grid(row=1, column=20,rowspan = 10)
-            window.GroupcontactsScrollbar.config(command=window.ListBoxNewWindow_qroupmemBox.yview)
-            window.GroupcontactsScrollbar.grid(row=1,column=30,ipady=50,rowspan = 10)
-            window.ListBoxNewWindow_qroupmemBox.bind('<Double-Button-1>',self.getgroupmemb)
-
-
-    def groupmessage_monitorsetting(self,window):
-
-
-        index =-1
-        outlistjiance =[]
-        outlistreply=[]
-
-        ListBoxNewWindow = Toplevel(self.init_window_name)
-        ListBoxNewWindow.selectname = self.ContactsBox.curselection()
-
-        name= self.ContactsBox.get(ListBoxNewWindow.selectname[0])
+            self.ListBoxNewWindow.ListBoxNewWindow_qroupmemBox.insert("end",yy['nick'])
+            self.ListBoxNewWindow.ListBoxNewWindow_qroupmemBox.grid(row=1, column=20,rowspan = 10)
+            self.ListBoxNewWindow.GroupcontactsScrollbar.config(command=self.ListBoxNewWindow.ListBoxNewWindow_qroupmemBox.yview)
+            self.ListBoxNewWindow.GroupcontactsScrollbar.grid(row=1,column=30,ipady=50,rowspan = 10)
+            self.ListBoxNewWindow.ListBoxNewWindow_qroupmemBox.bind('<Double-Button-1>',self.getgroupmemb)
 
 
 
 
-        ListBoxNewWindow.title("设置规则")
-        ListBoxNewWindow.ListBoxNewWindow_Title1 = Label(ListBoxNewWindow, text="请输入规则")
-        ListBoxNewWindow.ListBoxNewWindow_Title1.grid(row = 0,column=0)
-
-        #shu ru zu
-        ListBoxNewWindow.ListBoxNewWindow_guizeinput = Entry(ListBoxNewWindow)
-        ListBoxNewWindow.ListBoxNewWindow_guizeinput.grid(row =1, column =3)
-        ListBoxNewWindow.ListBoxNewWindow_guize = Label(ListBoxNewWindow, text="关键字")
-        ListBoxNewWindow.ListBoxNewWindow_guize.grid(row =1,column =0)
-
-
-        ListBoxNewWindow.ListBoxNewWindow_reply = Label(ListBoxNewWindow, text="回复")
-        ListBoxNewWindow.ListBoxNewWindow_reply.grid(row = 2,column =0)
-        ListBoxNewWindow.ListBoxNewWindow_replyinput = Entry(ListBoxNewWindow)
-        ListBoxNewWindow.ListBoxNewWindow_replyinput.grid(row =2, column =3)
-
-        #确认按钮
-        ListBoxNewWindow.ListBoxNewWindow_confirm_button = Button(ListBoxNewWindow,text="确认", bg="lightblue", width=10,command=lambda :self.confirmbutton(ListBoxNewWindow))
-        ListBoxNewWindow.ListBoxNewWindow_confirm_button.grid(row = 3, column = 0)
-
-
-        #取消按钮
-        ListBoxNewWindow.ListBoxNewWindow_cancel_button = Button(ListBoxNewWindow,text="取消", bg="lightblue", width=10,command=lambda :self.cancelbutton(ListBoxNewWindow))
-        ListBoxNewWindow.ListBoxNewWindow_cancel_button.grid(row = 3, column = 3)
-        #删除按钮
-        ListBoxNewWindow.ListBoxNewWindow_delete_button = Button(ListBoxNewWindow,text="删除", bg="lightblue", width=10,command=lambda :self.deletebutton(ListBoxNewWindow))
-        ListBoxNewWindow.ListBoxNewWindow_delete_button.grid(row = 3, column =5)
-
-        #显示检测和回复内容
-        ListBoxNewWindow.ListBoxNewWindow_jiance = Label(ListBoxNewWindow,text = "检测")
-        ListBoxNewWindow.ListBoxNewWindow_jiance.grid(row= 0, column =10)
-        ListBoxNewWindow.ListBoxNewWindow_jianceBox = Listbox(ListBoxNewWindow)
-        ListBoxNewWindow.ListBoxNewWindow_jianceBox.grid(row=1,column=10,rowspan =10)
-
-        ListBoxNewWindow.ListBoxNewWindow_huifu = Label(ListBoxNewWindow,text = "回复")
-        ListBoxNewWindow.ListBoxNewWindow_huifu.grid(row= 0, column =15)
-        ListBoxNewWindow.ListBoxNewWindow_huifuBox = Listbox(ListBoxNewWindow)
-        ListBoxNewWindow.ListBoxNewWindow_huifuBox.grid(row=1,column=15,rowspan =10)
-
-        # 更新信息框
-        for iii in self.monitor_names:
-            if name in iii.keys():
-                index = self.monitor_names.index(iii)
-        if index >=0 :
-            for ii in (self.monitor_names[index])[name].keys():
-                outlistjiance.append(ii)
-                outlistreply.append(((self.monitor_names[index])[name])[ii])
-
-        ListBoxNewWindow.ListBoxNewWindow_jianceBox.delete(0,END)
-        ListBoxNewWindow.ListBoxNewWindow_huifuBox.delete(0,END)
-        for x in outlistjiance:
-            ListBoxNewWindow.ListBoxNewWindow_jianceBox.insert("end", x)
-        for x in outlistreply:
-            ListBoxNewWindow.ListBoxNewWindow_huifuBox.insert("end",x)
 
 
 
+    def confirmbuttonGroup(self):
 
-    def confirmbuttonGroup(self,window):
+    ##########listbox里的名字###################################################
+        temp1 = self.ListBoxNewWindow.ListBoxNewWindow_qroupmemBox.curselection()
+        name = self.ListBoxNewWindow.ListBoxNewWindow_qroupmemBox.get(temp1[0])
 
-        keywords = window.ListBoxNewWindow_guizeinput.get()
-        reply =window.ListBoxNewWindow_replyinput.get()
-        name = self.GroupContactsBox.get(window.selectname[0])
-        groupmembselect = window.groupmembselect
-        print('groupmembselect',groupmembselect)
+
+        keywords = self.newwindow.ListBoxNewWindow_guizeinput.get()
+        reply =self.newwindow.ListBoxNewWindow_replyinput.get()
+        group_name = name + '-' + self.Group_name
+
+
         inflag = False
         index = -1
         outlistjiance =[]
         outlistreply=[]
+        outlistname=[]
 
-
-#################
+#################在monitorlist#############
 
         for i in self.monitor_groups:
-            if name in i.keys():
+            if group_name in i.keys():
                 inflag =True
                 index = self.monitor_groups.index(i)
 
-
+#####################没在monitorlist里#############
         if not inflag  :
-            tempdic = {name:{keywords:reply}}
+            tempdic = {group_name:{keywords:reply}}
             self.monitor_groups.append(tempdic)
 
-            #更新信息窗口
-
-
-
         else:
-            # if keywords not in (self.monitor_names[index])[name].keys():
-            #     tempdic = {keywords: reply}
-            #     (self.monitor_names[index])[name].update(tempdic)
-            # else:
+            if keywords not in (self.monitor_groups[index])[group_name].keys():
+                tempdic = {keywords: reply}
+                (self.monitor_groups[index])[group_name].update(tempdic)
+            else:
                 print("do nothing because keywords repeat")
 
 
@@ -512,30 +493,35 @@ class MY_GUI():
 
 
         #更新信息框
+        for iiii in self.monitor_groups:
+            print(iiii)
+            for i in iiii.keys():
+                print(i)
 
-        for iii in self.monitor_groups:
-            if name in iii.keys():
-                index = self.monitor_names.index(iii)
-        for ii in (self.monitor_groups[index])[name].keys():
-            outlistjiance.append(ii)
-            outlistreply.append(((self.monitor_groups[index])[name])[ii])
+                for iii in iiii[i]:
+                    print(iii)
+                    a = iiii[i]
+                    outlistjiance.append(iii)
+                    outlistreply.append(a[iii])
+                    outlistname.append(i)
+        self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.delete(0,END)
+        self.ListBoxNewWindow.ListBoxNewWindow_huifuBox.delete(0,END)
+        self.ListBoxNewWindow.ListBoxNewWindow_memberBox.delete(0,END)
 
-
-        window.ListBoxNewWindow_jianceBox.delete(0,END)
-        window.ListBoxNewWindow_huifuBox.delete(0,END)
         for x in outlistjiance:
-            window.ListBoxNewWindow_jianceBox.insert("end", x)
+            self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.insert("end", x)
         for x in outlistreply:
-            window.ListBoxNewWindow_huifuBox.insert("end",x)
+            self.ListBoxNewWindow.ListBoxNewWindow_huifuBox.insert("end",x)
+        for x in outlistname:
+            self.ListBoxNewWindow.ListBoxNewWindow_memberBox.insert("end",x)
+        monitor_group =self.monitor_groups
 
 
+    def confirmbutton(self):
 
-
-    def confirmbutton(self,window):
-
-        keywords = window.ListBoxNewWindow_guizeinput.get()
-        reply =window.ListBoxNewWindow_replyinput.get()
-        name = self.ContactsBox.get(window.selectname[0])
+        keywords = self.ListBoxNewWindow.ListBoxNewWindow_guizeinput.get()
+        reply =self.ListBoxNewWindow.ListBoxNewWindow_replyinput.get()
+        name = self.ContactsBox.get(self.ListBoxNewWindow.selectname[0])
         inflag = False
         index = -1
         outlistjiance =[]
@@ -578,24 +564,27 @@ class MY_GUI():
             outlistreply.append(((self.monitor_names[index])[name])[ii])
 
 
-        window.ListBoxNewWindow_jianceBox.delete(0,END)
-        window.ListBoxNewWindow_huifuBox.delete(0,END)
+        self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.delete(0,END)
+        self.ListBoxNewWindow.ListBoxNewWindow_huifuBox.delete(0,END)
         for x in outlistjiance:
-            window.ListBoxNewWindow_jianceBox.insert("end", x)
+            self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.insert("end", x)
         for x in outlistreply:
-            window.ListBoxNewWindow_huifuBox.insert("end",x)
+            self.ListBoxNewWindow.ListBoxNewWindow_huifuBox.insert("end",x)
+        monitor_name = self.monitor_names
 
 
+    def cancelbutton(self):
+        self.ListBoxNewWindow.destroy()
+    def cancelbutton_group(self):
+        self.newwindow.destroy()
 
-    def cancelbutton(self,window):
-        window.destroy()
-
-    def deletebutton(self,window):
+        self.ListBoxNewWindow.destroy()
+    def deletebutton(self):
 
         try:
-            name = self.ContactsBox.get(window.selectname[0])
-            keyword = window.ListBoxNewWindow_jianceBox.curselection()
-            keywords = window.ListBoxNewWindow_jianceBox.get(keyword[0])
+            name = self.ContactsBox.get(self.ListBoxNewWindow.selectname[0])
+            keyword = self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.curselection()
+            keywords = self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.get(keyword[0])
             print(keywords)
             outlistjiance = []
             outlistreply = []
@@ -608,12 +597,12 @@ class MY_GUI():
             for ii in (self.monitor_names[index])[name].keys():
                 outlistjiance.append(ii)
                 outlistreply.append(((self.monitor_names[index])[name])[ii])
-            window.ListBoxNewWindow_jianceBox.delete(0, END)
-            window.ListBoxNewWindow_huifuBox.delete(0, END)
+            self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.delete(0, END)
+            self.ListBoxNewWindow.ListBoxNewWindow_huifuBox.delete(0, END)
             for x in outlistjiance:
-                window.ListBoxNewWindow_jianceBox.insert("end", x)
+                self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.insert("end", x)
             for x in outlistreply:
-                window.ListBoxNewWindow_huifuBox.insert("end", x)
+                self.ListBoxNewWindow.ListBoxNewWindow_huifuBox.insert("end", x)
             print("delete", name)
 
         except IndexError:
@@ -623,12 +612,12 @@ class MY_GUI():
 
 
 
-    def deletebuttongroup(self, window):
+    def deletebuttongroup(self):
 
         try:
-            name = self.GroupContactsBox.get(window.selectname[0])
-            keyword = window.ListBoxNewWindow_jianceBox.curselection()
-            keywords =window.ListBoxNewWindow_jianceBox.get(keyword[0])
+            name = self.GroupContactsBox.get(self.ListBoxNewWindow.selectname[0])
+            keyword = self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.curselection()
+            keywords =self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.get(keyword[0])
             print(keywords)
             outlistjiance=[]
             outlistreply=[]
@@ -641,12 +630,12 @@ class MY_GUI():
             for ii in (self.monitor_names[index])[name].keys():
                 outlistjiance.append(ii)
                 outlistreply.append(((self.monitor_names[index])[name])[ii])
-            window.ListBoxNewWindow_jianceBox.delete(0,END)
-            window.ListBoxNewWindow_huifuBox.delete(0,END)
+            self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.delete(0,END)
+            self.ListBoxNewWindow.ListBoxNewWindow_huifuBox.delete(0,END)
             for x in outlistjiance:
-                window.ListBoxNewWindow_jianceBox.insert("end", x)
+                self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.insert("end", x)
             for x in outlistreply:
-                window.ListBoxNewWindow_huifuBox.insert("end",x)
+                self.ListBoxNewWindow.ListBoxNewWindow_huifuBox.insert("end",x)
             print("delete",name)
         except IndexError:
             print("Empty buffer")
@@ -661,12 +650,12 @@ class MY_GUI():
         index =-1
         outlistjiance =[]
         outlistreply=[]
+        outlistname = []
+        self.ListBoxNewWindow = Toplevel(self.init_window_name)
+        self.ListBoxNewWindow.protocol('WM_DELETE_WINDOW',self.close_update_mainpage)
+        self.ListBoxNewWindow.selectname = self.GroupContactsBox.curselection()
 
-        ListBoxNewWindow = Toplevel(self.init_window_name)
-
-        ListBoxNewWindow.selectname = self.GroupContactsBox.curselection()
-
-        name= self.GroupContactsBox.get(ListBoxNewWindow.selectname[0])
+        self.Group_name= self.GroupContactsBox.get(self.ListBoxNewWindow.selectname[0])
         # ListBoxNewWindow.title("设置规则")
         # ListBoxNewWindow.ListBoxNewWindow_Title1 = Label(ListBoxNewWindow, text="请输入规则")
         # ListBoxNewWindow.ListBoxNewWindow_Title1.grid(row = 0,column=0)
@@ -689,157 +678,138 @@ class MY_GUI():
         #
         #
         # #取消按钮
-        # ListBoxNewWindow.ListBoxNewWindow_cancel_button = Button(ListBoxNewWindow,text="取消", bg="lightblue", width=10,command=lambda :self.cancelbutton(ListBoxNewWindow))
-        # ListBoxNewWindow.ListBoxNewWindow_cancel_button.grid(row = 3, column = 3)
+        # self.ListBoxNewWindow.ListBoxNewWindow_cancel_button = Button(self.ListBoxNewWindow,text="取消", bg="lightblue", width=10,command=lambda :self.cancelbutton())
+        # self.ListBoxNewWindow.ListBoxNewWindow_cancel_button.grid(row = 3, column = 3)
         # #删除按钮
         # ListBoxNewWindow.ListBoxNewWindow_delete_button = Button(ListBoxNewWindow,text="删除", bg="lightblue", width=10,command=lambda :self.deletebuttongroup(ListBoxNewWindow))
         # ListBoxNewWindow.ListBoxNewWindow_delete_button.grid(row = 3, column =5)
 
         #获取群成员id并显示
-        ListBoxNewWindow.ListBoxNewWindow_delete_button = Button(ListBoxNewWindow,text="群成员", bg="lightblue", width=10,command=lambda :self.getgroupcontacts(ListBoxNewWindow))
-        ListBoxNewWindow.ListBoxNewWindow_delete_button.grid(row = 3, column =7)
+        self.ListBoxNewWindow.ListBoxNewWindow_delete_button = Button(self.ListBoxNewWindow,text="群成员", bg="lightblue", width=10,command=lambda :self.getgroupcontacts())
+        self.ListBoxNewWindow.ListBoxNewWindow_delete_button.grid(row = 3, column =7)
 
 
         #显示检测和回复内容
-        ListBoxNewWindow.ListBoxNewWindow_jiance = Label(ListBoxNewWindow,text = "检测")
-        ListBoxNewWindow.ListBoxNewWindow_jiance.grid(row= 0, column =10)
-        ListBoxNewWindow.ListBoxNewWindow_jianceBox = Listbox(ListBoxNewWindow)
-        ListBoxNewWindow.ListBoxNewWindow_jianceBox.grid(row=1,column=10,rowspan =10)
+        self.ListBoxNewWindow.ListBoxNewWindow_jiance = Label(self.ListBoxNewWindow,text = "检测")
+        self.ListBoxNewWindow.ListBoxNewWindow_jiance.grid(row= 0, column =10)
+        self.ListBoxNewWindow.ListBoxNewWindow_jianceBox = Listbox(self.ListBoxNewWindow)
+        self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.grid(row=1,column=10,rowspan =10)
 
-        ListBoxNewWindow.ListBoxNewWindow_huifu = Label(ListBoxNewWindow,text = "回复")
-        ListBoxNewWindow.ListBoxNewWindow_huifu.grid(row= 0, column =15)
-        ListBoxNewWindow.ListBoxNewWindow_huifuBox = Listbox(ListBoxNewWindow)
-        ListBoxNewWindow.ListBoxNewWindow_huifuBox.grid(row=1,column=15,rowspan =10)
+        self.ListBoxNewWindow.ListBoxNewWindow_huifu = Label(self.ListBoxNewWindow,text = "回复")
+        self.ListBoxNewWindow.ListBoxNewWindow_huifu.grid(row= 0, column =15)
+        self.ListBoxNewWindow.ListBoxNewWindow_huifuBox = Listbox(self.ListBoxNewWindow)
+        self.ListBoxNewWindow.ListBoxNewWindow_huifuBox.grid(row=1,column=15,rowspan =10)
 
 
         #显示群成员
-        ListBoxNewWindow.ListBoxNewWindow_qroupmem = Label(ListBoxNewWindow,text = "群成员")
-        ListBoxNewWindow.ListBoxNewWindow_qroupmem.grid(row= 0, column =20)
-        ListBoxNewWindow.ListBoxNewWindow_qroupmemBox = Listbox(ListBoxNewWindow)
-        ListBoxNewWindow.ListBoxNewWindow_qroupmemBox.grid(row=1,column=20,rowspan =10)
+        self.ListBoxNewWindow.ListBoxNewWindow_qroupmem = Label(self.ListBoxNewWindow,text = "群成员")
+        self.ListBoxNewWindow.ListBoxNewWindow_qroupmem.grid(row= 0, column =20)
+        self.ListBoxNewWindow.ListBoxNewWindow_qroupmemBox = Listbox(self.ListBoxNewWindow)
+        self.ListBoxNewWindow.ListBoxNewWindow_qroupmemBox.grid(row=1,column=20,rowspan =10)
 
 
 
         #群员名字
-        ListBoxNewWindow.ListBoxNewWindow_member = Label(ListBoxNewWindow,text = "群成员")
-        ListBoxNewWindow.ListBoxNewWindow_member.grid(row= 0, column =9)
-        ListBoxNewWindow.ListBoxNewWindow_memberBox = Listbox(ListBoxNewWindow)
-        ListBoxNewWindow.ListBoxNewWindow_memberBox.grid(row=1,column=9,rowspan =10)
 
-        # x = ListBoxNewWindow.ListBoxNewWindow_memberBox.curselection()
-        # print(x)
+        self.ListBoxNewWindow.ListBoxNewWindow_member = Label(self.ListBoxNewWindow,text = "jiance群成员")
+        self.ListBoxNewWindow.ListBoxNewWindow_member.grid(row= 0, column =9)
+        self.ListBoxNewWindow.ListBoxNewWindow_memberBox = Listbox(self.ListBoxNewWindow)
+        self.ListBoxNewWindow.ListBoxNewWindow_memberBox.grid(row=1,column=9,rowspan =10)
 
 
-        # 更新信息框
-        for iii in self.monitor_names:
-            if name in iii.keys():
-                index = self.monitor_names.index(iii)
-        if index >=0 :
-            for ii in (self.monitor_names[index])[name].keys():
-                outlistjiance.append(ii)
-                outlistreply.append(((self.monitor_names[index])[name])[ii])
 
-        ListBoxNewWindow.ListBoxNewWindow_jianceBox.delete(0,END)
-        ListBoxNewWindow.ListBoxNewWindow_huifuBox.delete(0,END)
-        for x in outlistjiance:
-            ListBoxNewWindow.ListBoxNewWindow_jianceBox.insert("end", x)
-        for x in outlistreply:
-            ListBoxNewWindow.ListBoxNewWindow_huifuBox.insert("end",x)
-
-    # def curseselect(self,window,select):
-    #
-    #     window.
-    #     print(window.groupmembselect)
-    #
 
 
     def getgroupmemb(self,event):
 
-        newwindow = Toplevel(self.init_window_name)
-        newwindow.title("设置规则")
-        newwindow.ListBoxNewWindow_Title1 = Label(newwindow, text="请输入规则")
-        newwindow.ListBoxNewWindow_Title1.grid(row = 0,column=0)
+        self.newwindow = Toplevel(self.init_window_name)
+
+
+
+        self.newwindow.title("设置规则")
+        self.newwindow.ListBoxNewWindow_Title1 = Label(self.newwindow, text="请输入规则")
+        self.newwindow.ListBoxNewWindow_Title1.grid(row = 0,column=0)
 
         #shu ru zu
-        newwindow.ListBoxNewWindow_guizeinput = Entry(newwindow)
-        newwindow.ListBoxNewWindow_guizeinput.grid(row =1, column =3)
-        newwindow.ListBoxNewWindow_guize = Label(newwindow, text="关键字")
-        newwindow.ListBoxNewWindow_guize.grid(row =1,column =0)
+        self.newwindow.ListBoxNewWindow_guizeinput = Entry(self.newwindow)
+        self.newwindow.ListBoxNewWindow_guizeinput.grid(row =1, column =3)
+        self.newwindow.ListBoxNewWindow_guize = Label(self.newwindow, text="关键字")
+        self.newwindow.ListBoxNewWindow_guize.grid(row =1,column =0)
 
 
-        newwindow.ListBoxNewWindow_reply = Label(newwindow, text="回复")
-        newwindow.ListBoxNewWindow_reply.grid(row = 2,column =0)
-        newwindow.ListBoxNewWindow_replyinput = Entry(newwindow)
-        newwindow.ListBoxNewWindow_replyinput.grid(row =2, column =3)
+        self.newwindow.ListBoxNewWindow_reply = Label(self.newwindow, text="回复")
+        self.newwindow.ListBoxNewWindow_reply.grid(row = 2,column =0)
+        self.newwindow.ListBoxNewWindow_replyinput = Entry(self.newwindow)
+        self.newwindow.ListBoxNewWindow_replyinput.grid(row =2, column =3)
 
         #确认按钮
-        newwindow.ListBoxNewWindow_confirm_button = Button(newwindow,text="确认", bg="lightblue", width=10,command=lambda :self.confirmbuttonGroup(newwindow))
-        newwindow.ListBoxNewWindow_confirm_button.grid(row = 3, column = 0)
+        self.newwindow.ListBoxNewWindow_confirm_button = Button(self.newwindow,text="确认", bg="lightblue", width=10,command=lambda :self.confirmbuttonGroup())
+        self.newwindow.ListBoxNewWindow_confirm_button.grid(row = 3, column = 0)
 
 
-        #取消按钮
-        newwindow.ListBoxNewWindow_cancel_button = Button(newwindow,text="取消", bg="lightblue", width=10,command=lambda :self.cancelbutton(newwindow))
-        newwindow.ListBoxNewWindow_cancel_button.grid(row = 3, column = 3)
+        # #取消按钮
+        # self.newwindow.ListBoxNewWindow_cancel_button = Button(self.newwindow,text="取消", bg="lightblue", width=10,command=lambda :self.cancelbutton_group())
+        # self.newwindow.ListBoxNewWindow_cancel_button.grid(row = 3, column = 3)
         #删除按钮
-        newwindow.ListBoxNewWindow_delete_button = Button(newwindow,text="删除", bg="lightblue", width=10,command=lambda :self.deletebuttongroup(newwindow))
-        newwindow.ListBoxNewWindow_delete_button.grid(row = 3, column =5)
+        self.newwindow.ListBoxNewWindow_delete_button = Button(self.newwindow,text="删除", bg="lightblue", width=10,command=lambda :self.deletebuttongroup())
+        self.newwindow.ListBoxNewWindow_delete_button.grid(row = 3, column =5)
 
         #self.groupmembselect =  window.ListBoxNewWindow_qroupmemBox.curselection()
         print('wo haole')
 
-    def listboxclick(self):
+    def listboxclick(self,event):
 
 
         index =-1
         outlistjiance =[]
         outlistreply=[]
 
-        ListBoxNewWindow = Toplevel(self.init_window_name)
-        ListBoxNewWindow.selectname = self.ContactsBox.curselection()
-
-        name= self.ContactsBox.get(ListBoxNewWindow.selectname[0])
-
-
+        self.ListBoxNewWindow = Toplevel(self.init_window_name)
+        self.ListBoxNewWindow.selectname = self.ContactsBox.curselection()
+        self.ListBoxNewWindow.protocol('WM_DELETE_WINDOW',self.close_update_mainpage)
+        name= self.ContactsBox.get(self.ListBoxNewWindow.selectname[0])
 
 
-        ListBoxNewWindow.title("设置规则")
-        ListBoxNewWindow.ListBoxNewWindow_Title1 = Label(ListBoxNewWindow, text="请输入规则")
-        ListBoxNewWindow.ListBoxNewWindow_Title1.grid(row = 0,column=0)
+
+
+        self.ListBoxNewWindow.title("设置规则")
+        self.ListBoxNewWindow.ListBoxNewWindow_Title1 = Label(self.ListBoxNewWindow, text="请输入规则")
+        self.ListBoxNewWindow.ListBoxNewWindow_Title1.grid(row = 0,column=0)
 
         #shu ru zu
-        ListBoxNewWindow.ListBoxNewWindow_guizeinput = Entry(ListBoxNewWindow)
-        ListBoxNewWindow.ListBoxNewWindow_guizeinput.grid(row =1, column =3)
-        ListBoxNewWindow.ListBoxNewWindow_guize = Label(ListBoxNewWindow, text="关键字")
-        ListBoxNewWindow.ListBoxNewWindow_guize.grid(row =1,column =0)
+        self.ListBoxNewWindow.ListBoxNewWindow_guizeinput = Entry(self.ListBoxNewWindow)
+        self.ListBoxNewWindow.ListBoxNewWindow_guizeinput.grid(row =1, column =3)
+        self.ListBoxNewWindow.ListBoxNewWindow_guize = Label(self.ListBoxNewWindow, text="关键字")
+        self.ListBoxNewWindow.ListBoxNewWindow_guize.grid(row =1,column =0)
 
 
-        ListBoxNewWindow.ListBoxNewWindow_reply = Label(ListBoxNewWindow, text="回复")
-        ListBoxNewWindow.ListBoxNewWindow_reply.grid(row = 2,column =0)
-        ListBoxNewWindow.ListBoxNewWindow_replyinput = Entry(ListBoxNewWindow)
-        ListBoxNewWindow.ListBoxNewWindow_replyinput.grid(row =2, column =3)
+        self.ListBoxNewWindow.ListBoxNewWindow_reply = Label(self.ListBoxNewWindow, text="回复")
+        self.ListBoxNewWindow.ListBoxNewWindow_reply.grid(row = 2,column =0)
+        self.ListBoxNewWindow.ListBoxNewWindow_replyinput = Entry(self.ListBoxNewWindow)
+        self.ListBoxNewWindow.ListBoxNewWindow_replyinput.grid(row =2, column =3)
 
         #确认按钮
-        ListBoxNewWindow.ListBoxNewWindow_confirm_button = Button(ListBoxNewWindow,text="确认", bg="lightblue", width=10,command=lambda :self.confirmbutton(ListBoxNewWindow))
-        ListBoxNewWindow.ListBoxNewWindow_confirm_button.grid(row = 3, column = 0)
+        self.ListBoxNewWindow.ListBoxNewWindow_confirm_button = Button(self.ListBoxNewWindow,text="确认", bg="lightblue", width=10,command=lambda :self.confirmbutton())
+        self.ListBoxNewWindow.ListBoxNewWindow_confirm_button.grid(row = 3, column = 0)
 
 
-        #取消按钮
-        ListBoxNewWindow.ListBoxNewWindow_cancel_button = Button(ListBoxNewWindow,text="取消", bg="lightblue", width=10,command=lambda :self.cancelbutton(ListBoxNewWindow))
-        ListBoxNewWindow.ListBoxNewWindow_cancel_button.grid(row = 3, column = 3)
+        # #取消按钮
+        # self.ListBoxNewWindow.ListBoxNewWindow_cancel_button = Button(self.ListBoxNewWindow,text="取消", bg="lightblue", width=10,command=lambda :self.cancelbutton())
+        # self.ListBoxNewWindow.ListBoxNewWindow_cancel_button.grid(row = 3, column = 3)
         #删除按钮
-        ListBoxNewWindow.ListBoxNewWindow_delete_button = Button(ListBoxNewWindow,text="删除", bg="lightblue", width=10,command=lambda :self.deletebutton(ListBoxNewWindow))
-        ListBoxNewWindow.ListBoxNewWindow_delete_button.grid(row = 3, column =5)
+        self.ListBoxNewWindow.ListBoxNewWindow_delete_button = Button(self.ListBoxNewWindow,text="删除", bg="lightblue", width=10,command=lambda :self.deletebutton())
+        self.ListBoxNewWindow.ListBoxNewWindow_delete_button.grid(row = 3, column =5)
 
         #显示检测和回复内容
-        ListBoxNewWindow.ListBoxNewWindow_jiance = Label(ListBoxNewWindow,text = "检测")
-        ListBoxNewWindow.ListBoxNewWindow_jiance.grid(row= 0, column =10)
-        ListBoxNewWindow.ListBoxNewWindow_jianceBox = Listbox(ListBoxNewWindow)
-        ListBoxNewWindow.ListBoxNewWindow_jianceBox.grid(row=1,column=10,rowspan =10)
+        self.ListBoxNewWindow.ListBoxNewWindow_jiance = Label(self.ListBoxNewWindow,text = "检测")
+        self.ListBoxNewWindow.ListBoxNewWindow_jiance.grid(row= 0, column =10)
+        self.ListBoxNewWindow.ListBoxNewWindow_jianceBox = Listbox(self.ListBoxNewWindow)
+        self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.grid(row=1,column=10,rowspan =10)
 
-        ListBoxNewWindow.ListBoxNewWindow_huifu = Label(ListBoxNewWindow,text = "回复")
-        ListBoxNewWindow.ListBoxNewWindow_huifu.grid(row= 0, column =15)
-        ListBoxNewWindow.ListBoxNewWindow_huifuBox = Listbox(ListBoxNewWindow)
-        ListBoxNewWindow.ListBoxNewWindow_huifuBox.grid(row=1,column=15,rowspan =10)
+        self.ListBoxNewWindow.ListBoxNewWindow_huifu = Label(self.ListBoxNewWindow,text = "回复")
+        self.ListBoxNewWindow.ListBoxNewWindow_huifu.grid(row= 0, column =15)
+        self.ListBoxNewWindow.ListBoxNewWindow_huifuBox = Listbox(self.ListBoxNewWindow)
+        self.ListBoxNewWindow.ListBoxNewWindow_huifuBox.grid(row=1,column=15,rowspan =10)
 
         # 更新信息框
         for iii in self.monitor_names:
@@ -850,12 +820,12 @@ class MY_GUI():
                 outlistjiance.append(ii)
                 outlistreply.append(((self.monitor_names[index])[name])[ii])
 
-        ListBoxNewWindow.ListBoxNewWindow_jianceBox.delete(0,END)
-        ListBoxNewWindow.ListBoxNewWindow_huifuBox.delete(0,END)
+        self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.delete(0,END)
+        self.ListBoxNewWindow.ListBoxNewWindow_huifuBox.delete(0,END)
         for x in outlistjiance:
-            ListBoxNewWindow.ListBoxNewWindow_jianceBox.insert("end", x)
+            self.ListBoxNewWindow.ListBoxNewWindow_jianceBox.insert("end", x)
         for x in outlistreply:
-            ListBoxNewWindow.ListBoxNewWindow_huifuBox.insert("end",x)
+            self.ListBoxNewWindow.ListBoxNewWindow_huifuBox.insert("end",x)
 
 
     #
@@ -863,10 +833,7 @@ class MY_GUI():
          if len(monitor_name)>0:
             self.Monitors()
          self.init_window_name.after(10,self.startmonitor)
-    #     self.TreadMonitor.start()
-    # def startmainloopthreah(self):
-    #     t = threading.Thread(target= self.init_window_name.mainloop())
-    #     t.start()
+
 
 
 
@@ -883,7 +850,9 @@ class MY_GUI():
         #         self.loadmonitorvaluse()
         #         self.printwindows()
 
-        monitors = monitor_name
+        monitors_names = monitor_name
+        monitors_groups =monitor_group
+
         ##########收取message################################################
         message = messagebox
         if len(monitors)>0 :
